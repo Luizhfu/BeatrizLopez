@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./style.css" />
+    <title>Coração do Amor</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Mande seu coração</h2>
+
+      <input type="text" id="nome" placeholder="Nome" /><br /><br />
+      <input
+        type="number"
+        id="piro_grande"
+        placeholder="Piro Grande"
+      /><br /><br />
+      <input
+        type="number"
+        id="piro_pequeno"
+        placeholder="Piro Pequeno"
+      /><br /><br />
+      <input type="number" id="coracao" placeholder="Coração" /><br /><br />
+      <input
+        type="text"
+        id="destinatario"
+        placeholder="destinatario"
+      /><br /><br />
+
+      <button onclick="enviar()">Salvar</button>
+    </div>
+
+    <script>
+      function enviar() {
+        fetch("http://localhost:3000/valent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nome: document.getElementById("nome").value,
+            piro_grande: document.getElementById("piro_grande").value,
+            piro_pequeno: document.getElementById("piro_pequeno").value,
+            coracao: document.getElementById("coracao").value,
+            nome: document.getElementById("nome").value,
+          }),
+        })
+          .then((res) => res.text())
+          .then((data) => alert(data))
+          .catch((err) => console.error(err));
+      }
+    </script>
+
+    <script>
+      function criarCoracao() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+        heart.style.fontSize = 10 + Math.random() * 20 + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }
+
+      setInterval(criarCoracao, 200);
+    </script>
+  </body>
+</html>
