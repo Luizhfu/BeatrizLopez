@@ -6,7 +6,7 @@ const app = express();
 
 // Configura CORS para permitir requisições do front no Vercel
 app.use(cors({
-  origin: "https://SEU_FRONT.vercel.app" // substitua pela URL do seu front
+  origin: "https://beatriz-lopez.vercel.app"
 }));
 
 app.use(express.json());

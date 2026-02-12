@@ -22,7 +22,7 @@
 
     <script>
       function enviar() {
-        fetch("https://SEU_BACKEND.up.railway.app/valent", { // <-- Troque para sua URL Railway
+        fetch("https://SEU_BACKEND_REAL.up.railway.app/valent", { // <-- Troque para a URL real do Railway
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -32,7 +32,7 @@
             piro_grande: document.getElementById("piro_grande").value,
             piro_pequeno: document.getElementById("piro_pequeno").value,
             coracao: document.getElementById("coracao").value,
-            destinatario: document.getElementById("destinatario").value, // Corrigido para enviar destinatario
+            destinatario: document.getElementById("destinatario").value,
           }),
         })
           .then((res) => res.text())
