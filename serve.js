@@ -1,15 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 const db = require("./connection");
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+// Configura CORS para permitir requisições do front no Vercel
+app.use(cors({
+  origin: "https://SEU_FRONT.vercel.app" // substitua pela URL do seu front
+}));
 
-// Serve front-end da pasta 'public'
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json());
 
 // Rota para inserção de dados
 app.post("/valent", (req, res) => {
@@ -22,17 +22,16 @@ app.post("/valent", (req, res) => {
 
   db.query(sql, [nome, piro_grande, piro_pequeno, coracao, destinatario], (err, result) => {
     if (err) {
-      console.error(err);
-      res.status(500).json(err);
-    } else {
-      res.send("✅ Dados inseridos com sucesso!");
+      console.error("Erro no banco:", err);
+      return res.status(500).json({ error: "Erro ao inserir dados" });
     }
+    res.json({ message: "✅ Dados inseridos com sucesso!" });
   });
 });
 
-// Qualquer rota que não seja API retorna index.html
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"));
+// Rota de teste (opcional) para verificar se o backend está online
+app.get("/ping", (req, res) => {
+  res.json({ message: "Backend online!" });
 });
 
 // Porta dinâmica do Railway
